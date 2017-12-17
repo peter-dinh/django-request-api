@@ -1,0 +1,38 @@
+{% extends 'app/index.html' %}
+
+{% block content %}
+<section id="form"><!--form-->
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4 ">
+				<div class="login-form"><!--login form-->
+					<h2>Sign In</h2>
+					
+					<form action="{% url 'login' %}" method="post">
+							{% csrf_token %}
+						<input type="text" name="email" placeholder="Email" />
+						<input type="password" name="password" placeholder="Password" />
+						<button type="submit" name="login" class="btn btn-default">Login</button>
+					</form>
+				</div><!--/login form-->
+			</div>
+			<div class="col-sm-1">
+				<h2 class="or">OR</h2>
+			</div>
+			<div class="col-sm-4">
+				<div class="signup-form"><!--sign up form-->
+					<h2>Sign Up</h2>
+					<form action="{% url 'register' %}" method="post">
+							{% csrf_token %}
+						<input type="email" name="r_email" placeholder="Email Address"/>
+						<input type="password" name="r_pass" placeholder="Password"/>
+						<input type="password" name="r_confirm" placeholder="Confirm"/>
+						<button type="submit" name="register" class="btn btn-default">Signup</button>
+					</form> 
+				</div><!--/sign up form-->
+			</div>
+		</div>
+	</div>
+</section><!--/form-->
+
+{% endblock %}

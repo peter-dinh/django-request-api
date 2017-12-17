@@ -1,0 +1,43 @@
+{% extends 'app/index.html' %}
+{% load humanize %}
+{% block slider %}
+    {% include 'app/blocks/slider.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="features_items" id="list-product"><!--features_items-->
+    <h2 class="title text-center">New Product</h2>
+    {% for item in listproduct %}
+    <div class="col-sm-4">
+        <div class="product-image-wrapper">
+            <div class="single-products">
+                    <div class="productinfo text-center">
+                        <a href="/product_detail/{{ item.0 }}"><img src="http://localhost:51717/{{ item.ProductImage }}" alt="" /></a>
+                        <h2>{{ item.Price| floatformat:"-3"|add:" VND"|intcomma }}</h2>
+
+                        <a href="/product_detail/{{ item.ProductID }}"><p>{{ item.ProductName }}</p></a>
+                        <a href="/add/{{ item.ProductID }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                    </div>
+                    <!-- <div class="product-overlay">
+                        <div class="overlay-content">
+                            <h2>$56</h2>
+                            <p>Easy Polo Black Edition</p>
+                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                        </div>
+                    </div> -->
+            </div>
+            <!-- <div class="choose">
+                <ul class="nav nav-pills nav-justified">
+                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                </ul>
+            </div> -->
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% include 'app/blocks/pagination.html' %}
+
+
+{% endblock %}

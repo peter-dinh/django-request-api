@@ -1,0 +1,37 @@
+{% extends 'app/index.html' %}
+{% load humanize %}
+{% block content %}
+<div class="features_items"><!--features_items-->
+	<h2 class="title text-center">Bill Info</h2>
+	<div class="col-md-10 col-md-offset-1">
+
+
+        <p><b>Order ID: </b> {{ data.orderID }}</p>
+        <p><b>User: </b> {{ data.orderUser }}</p>
+        <p><b>Total Cart: </b> {{ total| floatformat:"-3"|add:" VND"|intcomma }}</p>
+        <p><b>Name: </b> {{ data.orderNameofUser }}</p>
+        <p><b>Address: </b> {{ data.orderAddress }}</p>
+        <p><b>Phone: </b> {{ data.orderPhoneNumber }}</p>
+		<table class="table table-bordered">
+			<tr>
+				<th>#</th>
+				<th>Name</th>
+				<th>Status</th>
+				<th>Quantity</th>
+				<th>Price</th>
+            </tr>
+            
+			{% for item in data.orderItemIDs %}
+			<tr>
+				<td>{{ item.orderItemID }}</td>
+				<td>{{ item.productName }}</td>
+				<td>{{ item.orderItemState }}</td>
+				<td>{{ item.orderItemQuantity }}</td>
+				<td>{{ item.orderItemPrice}}</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div><!--features_items-->
+
+{% endblock %}

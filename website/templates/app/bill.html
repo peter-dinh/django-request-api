@@ -1,0 +1,26 @@
+{% extends 'app/index.html' %}
+
+{% block content %}
+<div class="features_items"><!--features_items-->
+	<h2 class="title text-center">My Bill</h2>
+	<div class="col-md-10 col-md-offset-1">
+		<table class="table table-bordered">
+			<tr>
+				<th>#</th>
+				<th>Date</th>
+				<th>Total</th>
+			</tr>
+			{% for item in list_order %}
+			<tr>
+				<td><a href="/bill_info/{{item.orderID}}">{{ item.orderID }}</a></td>
+				<td>{{ item.orderDate }}</td>
+				<td>{{ item.orderTotalPrice }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div><!--features_items-->
+
+
+{% include 'app/blocks/page2.html' %}
+{% endblock %}

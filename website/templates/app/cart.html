@@ -1,0 +1,119 @@
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "app/blocks/head.html" %}
+</head><!--/head-->
+
+<body>
+	{% include 'app/blocks/header.html' %}
+	{% include 'app/blocks/message_flash.html' %}
+
+	<section id="cart_items">
+		<div class="container">
+			<div class="breadcrumbs">
+				<ol class="breadcrumb">
+				  <li><a href="#">Home</a></li>
+				  <li class="active">Shopping Cart</li>
+				</ol>
+			</div>
+			<div class="table-responsive cart_info">
+				<table class="table table-condensed">
+					<thead>
+						<tr class="cart_menu">
+							<td class="image">Product</td>
+							<td class="description"></td>
+							<td class="price"></td>
+							<td class="quantity">Quantity</td>
+							<td class="total">Total</td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						{% for item in list_product_in_cart %}
+
+						<tr>
+							<td class="cart_product">
+								<a href="/product_detail/{{ item.productID }}"><img src="http://localhost:51717/{{ item.productImage }}" height="80px" alt=""></a>
+							</td>
+							<td class="cart_description">
+								<h4><a href="/product_detail/{{ item.productID }}">{{ item.productName }}</a></h4>
+								<p>Web ID: <b id="id">{{ item.productID }}</b></p>
+							</td>
+							<td class="cart_price">
+								<p>{{ item.price }}</p>
+							</td>
+							<td class="cart_quantity">
+								<div class="cart_quantity_button">
+									<input class="cart_quantity_input" type="text" name="quantity" data-myval="{{ item.productID }}" id="quantity" value="{{ item.quantity }}" autocomplete="off" size="2">
+								</div>
+							</td>
+							<td class="cart_total">
+								<p class="cart_total_price">{{ item.sumprice| floatformat:"-3"|add:" VND"|intcomma }}</p>
+							</td>
+							<td class="cart_delete">
+								<a class="cart_quantity_delete" href="/remove/{{ item.productID }}"><i class="fa fa-times"></i></a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section> <!--/#cart_items-->
+
+	<section id="do_action">
+		<div class="container">
+			<div class="heading">
+				<h3>Thông tin giỏ hàng</h3>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="chose_area">
+						<div class="login-form" style="margin-left:30px;">
+							<form action="{% url 'submit' %}" method="post">
+									{% csrf_token %}
+								<input type="text" name="name" {% if taikhoan %} value="{{ taikhoan.Name }}" {% endif %} placeholder="Name" />
+								<input type="text" name="phone" {% if taikhoan %} value="{{ taikhoan.PhoneNumber }}" {% endif %} placeholder="Phone" />
+								<input type="text" name="address" {% if taikhoan %} value="{{ taikhoan.HomeAddress }}" {% endif %} placeholder="Address" />
+								<input type="text" name="total" value="{{total_cart}}" style="display: none;">
+								<button type="submit" name="submit" class="btn btn-default">Order</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="total_area">
+						<ul>
+							<li>Giá giỏ hàng <span>{{ total_cart| floatformat:"-3"|add:" VND"|intcomma }}</span></li>
+							<li>Phí giao hàng <span>Miễn phí</span></li>
+							<li>Tổng cộng <span>{{ total_cart| floatformat:"-3"|add:" VND"|intcomma }}</span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section><!--/#do_action-->
+
+	{% include "app/blocks/footer.html" %}
+	
+	{% include "app/blocks/js.html" %}
+
+	<script>
+		$("#quantity").change(function(){
+			$.ajax({
+				url: "/set_qty",
+				type: "get",
+				dataType: "text",
+				data:{
+					id: $("#quantity").attr('data-myval'),
+					qty: $("#quantity").val(),
+				},
+				success : function (result){
+					location.reload();
+				}
+			});
+		});	
+	</script>
+</body>
+</html>

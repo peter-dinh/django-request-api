@@ -1,0 +1,21 @@
+<div style="clear:both">
+        <ul class="pagination">
+            {% if listproduct.has_previous %}
+            <li><a href="?page=1">&laquo; First</a></li>
+            <li><a href="?page={{ listproduct.previous_page_number }}">Back</a></li>
+            
+            {% endif %}
+            <!-- <li><a href="">&raquo;</a></li>
+            <li class="active"><a href="">1</a></li>
+            <li><a href="">2</a></li>
+            <li><a href="">3</a></li>
+            <li><a href="">&raquo;</a></li> -->
+            <li class="active">
+                <a>{{ listproduct.number }}</a>
+            </li>
+            {% if listproduct.has_next %}
+            <li><a href="?page={{ listproduct.next_page_number }}">Next</a></li>
+            <li><a href="?page={{ listproduct.paginator.num_pages }}">End &raquo;</a></li>
+        {% endif %}
+        </ul>
+    </div>

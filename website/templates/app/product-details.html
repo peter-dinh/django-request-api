@@ -1,0 +1,154 @@
+{% extends 'app/index.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<div class="product-details"><!--product-details-->
+	<div class="col-sm-5">
+		<div class="view-product">
+			<img src="http://localhost:51717/{{ product_info.ProductImage }}" alt="" />
+			<h3>ZOOM</h3>
+		</div>
+
+	</div>
+	<div class="col-sm-7">
+		<div class="product-information"><!--/product-information-->
+			<img src="images/product-details/new.jpg" class="newarrival" alt="" />
+			<h2>{{ product_info.productType }}</h2>
+			<p>Web ID: {{ product_info.productID }}</p>
+			
+			<span>
+				<span>{{ product_info.Price| floatformat:"-3"|add:" VND"|intcomma }}</span>
+				<label>Quantity:</label>
+				<input id="qty" type="text" value="1" />
+				<a href="#" id="add" class="btn btn-fefault cart">
+					<i class="fa fa-shopping-cart"></i>
+					Add to Cart
+				</a>
+			</span>
+			<p><b>Type Product:</b> {{ product_info.productType }}</p>
+			<p><b>Brand:</b> {{ product_info.brandName }}</p>
+			<p><b>Stock:</b> {{ product_info.Stock }}</p>
+		</div><!--/product-information-->
+	</div>
+</div><!--/product-details-->
+
+<div class="category-tab shop-details-tab"><!--category-tab-->
+	<div class="col-sm-12">
+		<ul class="nav nav-tabs">
+			<li><a href="#details" data-toggle="tab">Details</a></li>
+			<li class="active"><a href="#reviews" data-toggle="tab">Reviews</a></li>
+		</ul>
+	</div>
+	<div class="tab-content">
+		<div class="tab-pane fade" id="details" >
+			<div class="col-sm-12">
+				<div class="text-center">
+					<p><b>Name Merchant: </b>{{ info_merchant.MerchantName }}</p>
+					<p><b>Average Rating: </b> {{ info_merchant.averageRating }} </p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="tab-pane fade active in" id="reviews" >
+			<div class="col-sm-12">
+				<form action="{% url 'rating' product_info.productID %}" method="POST">
+						{% csrf_token %}
+					<b>Rating: </b> <br />
+					<select id="example-fontawesome-o" name="rating" data-current-rating="{{ get_rating.average }}" autocomplete="off">
+						<option value=""></option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5" selected>5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+					</select>
+					<b>Average: {{ get_rating.average }}</b> in {{ get_rating.count }} count
+					<button type="submit" class="btn btn-default pull-right">
+						Submit
+					</button>
+				</form>
+			</div>
+		</div>
+		
+	</div>
+</div><!--/category-tab-->
+
+<!-- <div class="recommended_items">
+	<h2 class="title text-center">Sản phẩm cùng loại</h2>
+	
+	<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+		<div class="carousel-inner">
+			<div class="item active">	
+				{% for item in danhsachcungloai1 %}
+				<div class="col-sm-4">
+					<div class="product-image-wrapper">
+						<div class="single-products">
+							<div class="productinfo text-center">
+									<a href="/product_detail/{{ item.0 }}"><img src="/media/{{item.3}}" alt="" /></a>
+									<h2>{{ item.2| floatformat:"-3"|add:" VND"|intcomma }}</h2>
+									<a href="/product_detail/{{ item.0 }}"><p>{{ item.4 }}</p></a>
+									<p>{{ item.5|add:" - "| add:item.6 }}</p>
+									<a href="/add/{{ item.0 }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			{% if danhsachcungloai2 %}
+			<div class="item">	
+				{% for item in danhsachcungloai2 %}
+				<div class="col-sm-4">
+					<div class="product-image-wrapper">
+						<div class="single-products">
+							<div class="productinfo text-center">
+								<a href="/product_detail/{{ item.0 }}"><img src="/media/{{item.3}}" alt="" /></a>
+								<h2>{{ item.2| floatformat:"-3"|add:" VND"|intcomma }}</h2>
+								<a href="/product_detail/{{ item.0 }}"><p>{{ item.4 }}</p></a>
+								<p>{{ item.5|add:" - "| add:item.6 }}</p>
+								<a href="" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		 <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+			<i class="fa fa-angle-left"></i>
+		  </a>
+		  <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+			<i class="fa fa-angle-right"></i>
+		  </a>			
+	</div>
+</div>/recommended_items -->
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+	$("#add").click(function(){
+		var qty = $("#qty").val()
+		var url = "http://localhost:8000/add/{{ product_info.productID }}/"+ qty
+		console.log(url)
+		$.get(url, function(){
+			window.location.href = "http://localhost:8000/cart";
+		})
+	});
+
+</script>
+<script src="{% static 'js/jquery.barrating.js' %}"></script>
+<script src="{% static 'js/examples.js' %}"></script> 
+
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/fontawesome-stars-o.css' %}">
+{% endblock %}

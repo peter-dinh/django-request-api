@@ -1,0 +1,23 @@
+{% load static %}
+<div class="header-middle"><!--header-middle-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="logo pull-left">
+                    <a href="/"><img src="{% static 'images/home/logo.png' %}" alt="" /></a>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="shop-menu pull-right">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/account"><i class="fa fa-user"></i> Tài khoản</a></li>
+                        <li><a href="/change_pass"><i class="fa fa-key"></i> Đổi mật khẩu</a></li>
+                        <li><a href="/bill"><i class="fa fa-table"></i> Đơn hàng</a></li>
+                        <li><a href="/cart"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
+                        <li><a href="/logout"><i class="fa fa-sign-out "></i> Thoát</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--/header-middle-->

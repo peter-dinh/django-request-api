@@ -1,0 +1,26 @@
+{% extends 'app/index.html' %}
+
+{% block content %}
+<div class="features_items"><!--features_items-->
+	<h2 class="title text-center">Change Password</h2>
+	<div class="col-md-8 col-md-offset-2">
+		<form action="{% url 'change_pass' %}" method="post">
+			{% csrf_token %}
+			<div class="form-group">
+				<label for="old_pass">Current Password:</label>
+				<input type="password" class="form-control" name="old_pass" id="old_pass" placeholder="Current Password">
+			</div>
+			<div class="form-group">
+				<label for="new_pass">New Password:</label>
+				<input type="password" class="form-control" name="new_pass" id="new_pass" placeholder="New Password">
+			</div>
+			<div class="form-group">
+				<label for="repeat">Confirm:</label>
+				<input type="password" class="form-control" name="confirm" id="confirm" placeholder="Confirm">
+			</div>
+			<button type="submit" class="btn btn-primary">Update</button>
+		</form>
+	</div>
+</div><!--features_items-->
+
+{% endblock %}

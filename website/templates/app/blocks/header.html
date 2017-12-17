@@ -1,0 +1,13 @@
+{% if 'token' not in request.session %}
+<header id="header"><!--header-->
+    
+    {% include 'app/blocks/header_login.html' %}
+
+</header><!--/header-->
+{% else %}
+<header id="header"><!--header-->
+    
+    {% include 'app/blocks/header_account.html' %}
+    
+</header><!--/header-->
+{% endif %}

@@ -1,0 +1,21 @@
+<div style="clear:both">
+        <ul class="pagination">
+            {% if list_order.has_previous %}
+            <li><a href="?page=1">&laquo; First</a></li>
+            <li><a href="?page={{ list_order.previous_page_number }}">Back</a></li>
+            
+            {% endif %}
+            <!-- <li><a href="">&raquo;</a></li>
+            <li class="active"><a href="">1</a></li>
+            <li><a href="">2</a></li>
+            <li><a href="">3</a></li>
+            <li><a href="">&raquo;</a></li> -->
+            <li class="active">
+                <a>{{ list_order.number }}</a>
+            </li>
+            {% if list_order.has_next %}
+            <li><a href="?page={{ list_order.next_page_number }}">Next</a></li>
+            <li><a href="?page={{ list_order.paginator.num_pages }}">End &raquo;</a></li>
+        {% endif %}
+        </ul>
+    </div>
